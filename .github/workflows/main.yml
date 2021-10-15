@@ -43,7 +43,7 @@ jobs:
       - name: push codedeploy revision to s3
         run: aws deploy push
           --application-name ${{ secrets.AWS_CODEDEPLOY_APP_NAME }}
-          --s3-location s3://${{ secrets.AWS_S3_BUCKET_NAME }}/${{ github.sha }}.zip
+          --s3-location s3://${{ secrets.AWS_S3_BUCKET_NAME }}/$GITHUB_SHA.zip
           --source .
       
       - name: create deployments
@@ -51,4 +51,4 @@ jobs:
           --application-name ${{ secrets.AWS_CODEDEPLOY_APP_NAME }}
           --deployment-group-name ${{ secrets.AWS_CODEDEPLOY_GROUP_NAME }}
           --deployment-config-name CodeDeployDefault.OneAtATime
-          --s3-location bucket=${{ secrets.AWS_S3_BUCKET_NAME }},key=${{ env.GITHUB_SHA }}.zip,bundleType=zip
+          --s3-location bucket=${{ secrets.AWS_S3_BUCKET_NAME }},key=$GITHUB_SHA.zip,bundleType=zip
