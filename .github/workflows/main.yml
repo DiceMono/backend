@@ -17,10 +17,9 @@ jobs:
           echo hi
           echo ${{ secrets.HELLO }}
           echo hi
-          echo ${{ secrets.production }}
+          echo ${{ secrets }}
           echo hi
-          echo ${{ env.HELLO }}
-      
+          echo $SECRETS      
       - name: install aws cli
         run: |
           curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
