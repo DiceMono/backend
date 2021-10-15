@@ -32,6 +32,7 @@ jobs:
           cat $GITHUB_ENV
           echo hi
           cat .env
+          ls -al
  
       - name: install aws cli
         run: |
