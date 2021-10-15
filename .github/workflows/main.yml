@@ -25,6 +25,7 @@ jobs:
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
           PORT: ${{ secrets.PORT }}
           REDIRECT_URL: ${{ secrets.REDIRECT_URL }}
+          HELLO: ${{ secrets.HELLO }}
         run: |
           cat $GITHUB_ENV > .env
           echo $GITHUB_ENV
