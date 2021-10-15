@@ -15,11 +15,11 @@ jobs:
         run: |
           cat $GITHUB_ENV > .env
           echo hi
-          cat ${{ secrets.HELLO }}
+          echo ${{ secrets.HELLO }}
           echo hi
-          cat ${{ secrets.production }}
+          echo ${{ secrets.production }}
           echo hi
-          cat ${{ env.HELLO }}
+          echo ${{ env.HELLO }}
       
       - name: install aws cli
         run: |
