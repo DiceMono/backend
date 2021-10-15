@@ -29,10 +29,9 @@ jobs:
           aws-region: ap-northeast-2
 
       - name: push codedeploy revision to s3
-        run: |
-          aws deploy push \
-          --application-name ${{ secrets.AWS_CODEDEPLOY_APP_NAME }} \
-          --s3-location s3://${{ secrets.AWS_S3_BUCKET_NAME }}/${{ env.GITHUB_SHA }}.zip \
+        run: aws deploy push
+          --application-name ${{ secrets.AWS_CODEDEPLOY_APP_NAME }}
+          --s3-location s3://${{ secrets.AWS_S3_BUCKET_NAME }}/${{ env.GITHUB_SHA }}.zip
           --source .
       
       - name: create deployments
