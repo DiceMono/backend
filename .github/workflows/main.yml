@@ -26,8 +26,8 @@ jobs:
           PORT: ${{ secrets.PORT }}
           REDIRECT_URL: ${{ secrets.REDIRECT_URL }}
         run: |
-          cat $GITHUB_ENV > .env
-          cat $GITHUB_ENV
+          env > .env
+          env
  
       - name: install aws cli
         run: |
