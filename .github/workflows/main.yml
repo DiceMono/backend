@@ -11,15 +11,24 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: create .env file 
+      - name: create .env file
+        env:
+          AUTH_URL: ${{ secrets.AUTH_URL }}
+          CALLBACK_URL: ${{ secrets.CALLBACK_URL }}
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+          DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
+          DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+          DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+          DATABASE_USER: ${{ secrets.DATABASE_USER }}
+          ELASTICSEARCH_NODE: ${{ secrets.ELASTICSEARCH_NODE }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          PORT: ${{ secrets.PORT }}
+          REDIRECT_URL: ${{ secrets.REDIRECT_URL }}
         run: |
           cat $GITHUB_ENV > .env
-          echo hi
-          echo ${{ secrets.HELLO }}
-          echo hi
-          echo ${{ secrets }}
-          echo hi
-          echo $secrets     
+          cat $GITHUB_ENV
+ 
       - name: install aws cli
         run: |
           curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
