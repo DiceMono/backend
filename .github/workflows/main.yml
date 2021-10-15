@@ -14,7 +14,12 @@ jobs:
       - name: create .env file 
         run: |
           cat $GITHUB_ENV > .env
-          cat .env
+          echo hi
+          cat ${{ secrets.HELLO }}
+          echo hi
+          cat ${{ secrets.production }}
+          echo hi
+          cat ${{ env.HELLO }}
       
       - name: install aws cli
         run: |
@@ -22,8 +27,6 @@ jobs:
           unzip -q awscliv2.zip 
           sudo ./aws/install --update
           rm -rf ./aws awscliv2.zip
-          ls -al
-          pwd
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -38,9 +41,9 @@ jobs:
           --s3-location s3://${{ secrets.AWS_S3_BUCKET_NAME }}/${{ env.GITHUB_SHA }}.zip
           --source .
       
-      - name: create deployments
-        run: aws deploy create-deployment
-          --application-name ${{ secrets.AWS_CODEDEPLOY_APP_NAME }}
-          --deployment-group-name ${{ secrets.AWS_CODEDEPLOY_GROUP_NAME }}
-          --deployment-config-name CodeDeployDefault.OneAtATime
-          --s3-location bucket=${{ secrets.AWS_S3_BUCKET_NAME }},key=${{ env.GITHUB_SHA }}.zip,bundleType=zip
+#       - name: create deployments
+#         run: aws deploy create-deployment
+#           --application-name ${{ secrets.AWS_CODEDEPLOY_APP_NAME }}
+#           --deployment-group-name ${{ secrets.AWS_CODEDEPLOY_GROUP_NAME }}
+#           --deployment-config-name CodeDeployDefault.OneAtATime
+#           --s3-location bucket=${{ secrets.AWS_S3_BUCKET_NAME }},key=${{ env.GITHUB_SHA }}.zip,bundleType=zip
