@@ -13,13 +13,13 @@ jobs:
       - name: create .env file 
         run: |
           cat $GITHUB_ENV > .env
-          echo hi!!!!!!!!!!!!!!
       
       - name: install aws cli
         run: |
           curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
           unzip -q awscliv2.zip 
-          
+          sudo ./aws/install --update
+          rm -rf ./aws awscliv2.zip
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -29,5 +29,15 @@ jobs:
           aws-region: ap-northeast-2
 
       - name: push codedeploy revision to s3
-        run: aws deploy push --application-name ${{ secrets.AWS_CODEDEPLOY_APP_NAME }} --s3-location s3://${{ secrets.AWS_S3_BUCKET_NAME }}/${{ env.GITHUB_SHA }} --source .
-          
+        run: |
+          aws deploy push \
+          --application-name ${{ secrets.AWS_CODEDEPLOY_APP_NAME }} \
+          --s3-location s3://${{ secrets.AWS_S3_BUCKET_NAME }}/${{ env.GITHUB_SHA }}.zip \
+          --source .
+      
+      - name: create deployments
+        run: aws deploy create-deployment
+          --application-name ${{ secrets.AWS_CODEDEPLOY_APP_NAME }}
+          --deployment-group-name ${{ secrets.AWS_CODEDEPLOY_GROUP_NAME }}
+          --deployment-config-name CodeDeployDefault.OneAtATime
+          --s3-location bucket=${{ secrets.AWS_S3_BUCKET_NAME }},key=${{ env.GITHUB_SHA }}.zip,bundleType=zip
