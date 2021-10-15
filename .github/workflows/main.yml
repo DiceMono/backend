@@ -27,6 +27,9 @@ jobs:
           REDIRECT_URL: ${{ secrets.REDIRECT_URL }}
         run: |
           cat $GITHUB_ENV > .env
+          echo $GITHUB_ENV
+          cat $GITHUB_ENV
+          echo hi
           cat .env
  
       - name: install aws cli
