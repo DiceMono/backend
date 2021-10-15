@@ -1,0 +1,41 @@
+name: CD
+
+on:
+  push:
+    branches: [ develop ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: create .env file 
+        run: |
+          cat $GITHUB_ENV > .env
+          echo hi!!!!!!!!!!!!!!
+      
+      - name: install aws cli
+        run: |
+          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          unzip -q awscliv2.zip 
+          sudo ./aws/install
+          rm -rf ./aws awscliv2.zip
+          ls -al
+          touch -t 198103160120 some_file
+          find . ! -newer some_file ! -name some_file
+          echo hi!!!!
+          cat ./workflow/1
+          echo hixxxx
+          cat ./workflow/2
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+
+      - name: push codedeploy revision to s3
+        run: aws deploy push --application-name ${{ secrets.AWS_CODEDEPLOY_APP_NAME }} --s3-location s3://${{ secrets.AWS_S3_BUCKET_NAME }}/${{ env.GITHUB_SHA }} --source .
+          
