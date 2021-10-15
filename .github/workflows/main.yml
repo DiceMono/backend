@@ -21,6 +21,7 @@ jobs:
           sudo ./aws/install --update
           rm -rf ./aws awscliv2.zip
           ls -al
+          pwd
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
