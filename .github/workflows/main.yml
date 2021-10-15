@@ -19,15 +19,7 @@ jobs:
         run: |
           curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
           unzip -q awscliv2.zip 
-          sudo ./aws/install --update
-          rm -rf ./aws awscliv2.zip
-          ls -al
-          touch -t 198103160120 some_file
-          find . ! -newer some_file ! -name some_file
-          echo hi!!!!
-          cat ./workflow/1
-          echo hixxxx
-          cat ./workflow/2
+          
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
