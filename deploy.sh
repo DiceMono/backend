@@ -1,3 +1,4 @@
+ls -al
 ## run docker containers
 docker-compose up --build -d
 
